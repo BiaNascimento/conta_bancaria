@@ -1,6 +1,8 @@
 import readlinesync = require("readline-sync");
 import { colors } from './src/util/Colors';
 import { Conta } from "./src/model/Conta";
+import { ContaCorrente } from "./src/model/ContaCorrente";
+import { ContaPoupanca } from "./src/model/ContaPoupanca";
 
 export function main() {
 
@@ -13,12 +15,19 @@ export function main() {
     conta.depositar(5000);
     conta.visualizar();
 
-    const conta2: Conta = new Conta(2,123,1,"Gabriel",10);
-    conta2.visualizar();
-    conta2.sacar(10500);
-    conta2.visualizar();
-    conta2.depositar(5000);
-    conta2.visualizar();
+    const contacorrente: ContaCorrente = new ContaCorrente(2,123,1,"Gabriel", 15000, 1000);
+    contacorrente.visualizar();
+    contacorrente.sacar(2000);
+    contacorrente.visualizar();
+    contacorrente.depositar(1000);
+    contacorrente.visualizar();
+
+    const contapoupanca: ContaPoupanca = new ContaPoupanca(3,123,2,"Camila", 1000, 10);
+    contapoupanca.visualizar();
+    contapoupanca.sacar(200);
+    contapoupanca.visualizar();
+    contapoupanca.depositar(1000);
+    contapoupanca.visualizar();
 
     while (true) {
 
