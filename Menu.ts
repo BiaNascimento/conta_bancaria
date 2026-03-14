@@ -4,6 +4,7 @@ import { Conta } from "./src/model/Conta";
 import { ContaCorrente } from "./src/model/ContaCorrente";
 import { ContaPoupanca } from "./src/model/ContaPoupanca";
 import { ContaController } from "./src/controller/ContaController";
+import { read } from "node:fs";
 
 export function main() {
   let contas: ContaController = new ContaController();
@@ -163,6 +164,10 @@ export function main() {
           colors.reset,
         );
 
+        console.log("Digite o numero da Conta: ");
+        numero = readlinesync.questionInt("");
+        contas.procurarPorNumero(numero);
+
         keyPress();
 
         break;
@@ -173,6 +178,44 @@ export function main() {
           colors.reset,
         );
 
+        console.log("Digite o numero da conta: ");
+        numero = readlinesync.questionInt("");
+        
+        let conta = contas.buscarNoArray(numero);
+
+        if(conta != null){
+
+          console.log("Digiter o Numero da Agencia: ");
+          agencia = readlinesync.questionInt("");
+
+          console.log("Digite o Nome do Titular da conta: ");
+          titular = readlinesync.question("");
+
+          tipo = conta.tipo;
+
+          console.log("\nDigite o saldo da conta (R$): ");
+          saldo = readlinesync.questionFloat("");
+
+          switch(tipo){
+            case 1:
+              console.log("Digite o limiter da conta (R$): ");
+              limite = readlinesync.questionFloat("");
+              contas.atualizar(
+                new ContaCorrente(numero,agencia,tipo,titular,saldo, limite)
+              );
+              break;
+
+              case 2:
+                console.log("Digite o aniversario da Conta Poupanca: ");
+                aniversario = readlinesync.questionInt("");
+                contas.atualizar(new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario));
+
+                break;
+          }
+          }else{
+            console.log(colors.fg.red, "\nA conta numero: "+ numero + " nao foi encontrada!", colors.reset);
+        }
+
         keyPress();
 
         break;
@@ -182,6 +225,10 @@ export function main() {
           "\n\nApagar uma Conta\n\n",
           colors.reset,
         );
+
+        console.log("Digite o numero da Conta: ");
+        numero = readlinesync.questionInt("");
+        contas.deletar(numero);
 
         keyPress();
 
